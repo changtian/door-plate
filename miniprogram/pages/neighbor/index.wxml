@@ -1,0 +1,85 @@
+<!-- neighbor.wxml -->
+<view class="container">
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+  <!-- 楼栋筛选 -->
+    <picker 
+        mode="selector" 
+        range="{{buildingList}}" 
+        value="{{currentBuildingIndex}}" 
+        bindchange="handleBuildingChange"
+        class="filter-item search-box"
+    >
+        <view class="filter-box">
+            <image src="/images/building-icon.png" class="filter-icon"/>
+            <text class="filter-text">{{selectedBuilding || '选择楼栋'}}</text>
+        </view>
+        <view wx:if="{{selectedBuilding}}" class="clear-btn" bindtap="clearBuilding">
+                <image src="/images/clear-icon.png" class="clear-icon"/>
+            </view>
+    </picker>
+
+    <!-- 姓名搜索 -->
+    <view class="filter-item search-box">
+        <image src="/images/search-icon.png" class="filter-icon"/>
+        <input 
+        placeholder="输入邻居姓名" 
+        value="{{searchKeyword}}" 
+        bindinput="handleSearchInput"
+        class="search-input"
+        confirm-type="search"
+        bindconfirm="handleSearch"
+        />
+        <view wx:if="{{searchKeyword}}" class="clear-btn" bindtap="clearSearch">
+            <image src="/images/clear-icon.png" class="clear-icon"/>
+        </view>
+    </view>
+  </view>
+  <!-- 筛选条件标签 -->
+    <view class="active-filters">
+        <block wx:if="{{selectedBuilding}}">
+            <view class="filter-tag">
+            楼栋：{{selectedBuilding}}栋
+            <text class="close" bindtap="clearBuilding">×</text>
+            </view>
+        </block>
+        <block wx:if="{{searchKeyword}}">
+            <view class="filter-tag">
+            姓名：{{searchKeyword}}
+            <text class="close" bindtap="clearSearch">×</text>
+            </view>
+        </block>
+    </view>
+
+  <!-- 邻居列表 -->
+  <scroll-view scroll-y class="neighbor-list">
+    <view class="neighbor-grid">
+      <block wx:for="{{filteredNeighbors}}" wx:key="id">
+        <view class="neighbor-card">
+          <image 
+            src="{{item.avatar}}" 
+            class="neighbor-avatar" 
+            mode="aspectFill"
+            binderror="onAvatarError"
+          />
+          <view class="info-container">
+            <text class="neighbor-name">{{item.name}}</text>
+            <view class="location-info">
+              <text class="building">{{item.building}}栋</text>
+              <text class="unit">{{item.unit}}单元</text>
+              <text class="room">{{item.room}}室</text>
+            </view>
+            <view class="tags">
+              <text wx:for="{{item.tags}}" wx:key="index" class="tag">{{item}}</text>
+            </view>
+          </view>
+          <button class="contact-btn" size="mini">打招呼</button>
+        </view>
+      </block>
+    </view>
+    <view wx:if="{{filteredNeighbors.length === 0}}" class="empty-tip">
+      <image src="/images/empty.png" class="empty-img"/>
+      <text class="empty-text">暂无该楼栋邻居</text>
+    </view>
+  </scroll-view>
+</view>

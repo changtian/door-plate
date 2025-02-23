@@ -1,0 +1,95 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /**电子门锁**/
+  .doorplate{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+  }
+
+  .family-name {
+    font-family: 'STFangsong', serif; /* 尝试系统内置仿宋 */
+    font-size: 18px;
+  }
+  
+  .family-address {
+    font-family: 'STKaiti', cursive; /* 尝试系统内置楷体 */
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* 添加文本溢出处理 */
+.family-name, .family-address {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+  
+  .swiper {
+    width: 100%;
+    height: 120px;
+    white-space: nowrap;
+  }
+  
+  .slide-image {
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 家庭成员信息 */
+.member-scroll {
+    width: 100%;
+    height: 300px; /* 可根据需要调整高度 */
+    margin-top: 20px;
+  }
+  
+  .member-table {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .member-row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .member-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .member-age {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .member-relationship {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+  }

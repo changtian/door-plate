@@ -1,0 +1,33 @@
+
+<view class="container">
+  <!-- 电子门牌 -->
+  <view class="doorplate">
+    <text class="family-name">{{family.plate|| '未命名家庭'}}</text>
+    <text class="family-address">{{family.address|| '地址待完善'}}</text>
+  </view>
+  <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="1000">
+    <swiper-item>
+      <image src="/images/family/image1.jpg" class="slide-image" mode="aspectFill"/>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/family/image2.jpg" class="slide-image" mode="aspectFill" />
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/family/image3.jpeg" class="slide-image" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+  <scroll-view class="member-scroll" scroll-y>
+    <view class="member-table">
+    <block wx:for="{{familyMembers}}" wx:key="id">
+      <view class="member-row">
+        <!-- 头像 -->
+        <image src="{{item.avatar || '/images/avatar.png'}}" class="member-avatar"></image>
+        <text class="member-name">{{item.name}}</text>
+        <text class="member-age">{{item.age}}</text>
+        <text class="member-relationship">{{item.relationship}}</text>
+      </view>
+    </block>
+  </view>
+  </scroll-view>
+  
+</view>

@@ -1,0 +1,35 @@
+
+{
+    "pages": [
+      "pages/home/home", 
+      "pages/neighbor/index",
+      "pages/message/index"
+    ],
+    "window": {
+      "navigationBarTitleText": "我的家",
+      "navigationBarBackgroundColor": "#fff",
+      "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+      "list": [
+        {
+          "pagePath": "pages/home/home",
+          "text": "我的家",
+          "iconPath": "images/icons/home.png",
+          "selectedIconPath": "images/icons/home-active.png"
+        },
+        {
+          "pagePath": "pages/neighbor/index",
+          "text": "邻居",
+          "iconPath": "images/icons/neighbor.png",
+          "selectedIconPath": "images/icons/neighbor-active.png"
+        },
+        {
+          "pagePath": "pages/message/index",
+          "text": "消息",
+          "iconPath": "images/icons/message.png",
+          "selectedIconPath": "images/icons/message-active.png"
+        }
+      ]
+    }
+  }
