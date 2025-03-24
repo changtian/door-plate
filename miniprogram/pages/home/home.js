@@ -40,5 +40,31 @@ Page({
 
   onLoad: function () {
     // 页面加载时的初始化逻辑
-  }
+  },
+
+  handleDoorplateClick() {
+  wx.showModal({
+    title: '编辑电子门牌',
+    content: '是否要修改家庭信息？',
+    success: (res) => {
+      if (res.confirm) {
+        wx.navigateTo({
+          url: '/pages/doorplate/edit',
+          events: { // ✅ 新增事件定义
+            initData: (data) => {
+              console.log('接收编辑页返回数据:', data)
+            }
+          },
+          success: (res) => {
+            // ✅ 通过res.eventChannel获取通道
+            res.eventChannel.emit('initData', {
+              family: this.data.family,
+              members: this.data.familyMembers
+            })
+          }
+        })
+      }
+    }
+  })
+}
 });

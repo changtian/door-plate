@@ -1,7 +1,8 @@
 
 <view class="container">
   <!-- 电子门牌 -->
-  <view class="doorplate">
+  <view class="doorplate" bindtap="handleDoorplateClick"
+  hover-class="doorplate-active">
     <text class="family-name">{{family.plate|| '未命名家庭'}}</text>
     <text class="family-address">{{family.address|| '地址待完善'}}</text>
   </view>

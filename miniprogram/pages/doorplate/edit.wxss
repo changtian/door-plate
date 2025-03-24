@@ -1,0 +1,60 @@
+/* pages/doorplate/edit.wxss */
+.edit-container {
+    --primary: #4a90e2;
+    --background: #f8f9fc;
+    --card-bg: rgba(255,255,255,0.9);
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --border: rgba(0,0,0,0.1);
+  }
+  
+  /* 毛玻璃导航栏 */
+  .nav-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20rpx 32rpx;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(20rpx);
+    display: flex;
+    align-items: center;
+    z-index: 100;
+  }
+  
+  /* 智能地址组件 */
+  .amap-address-picker {
+    border-radius: 16rpx;
+    overflow: hidden;
+    box-shadow: 0 4rpx 12rpx rgba(74,144,226,0.1);
+  }
+  
+  /* 可拖拽成员卡片 */
+  .member-card {
+    background: var(--card-bg);
+    border-radius: 24rpx;
+    padding: 24rpx;
+    margin-bottom: 24rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  
+  .member-card:active {
+    transform: scale(0.98);
+  }
+  
+  /* 动态保存提示 */
+  .save-tip {
+    position: fixed;
+    bottom: 48rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    padding: 16rpx 32rpx;
+    border-radius: 48rpx;
+    color: white;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 8rpx 24rpx rgba(74,144,226,0.3);
+  }

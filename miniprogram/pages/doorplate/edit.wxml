@@ -1,0 +1,116 @@
+<!-- pages/doorplate/edit.wxml -->
+<view class="edit-container">
+  <!-- 沉浸式导航栏 -->
+  <view class="nav-bar">
+    <view class="back-btn" bindtap="navigateBack">
+      <image src="/images/icons/arrow-left.svg" class="icon"/>
+    </view>
+    <text class="title">家庭信息管理</text>
+    <view class="save-btn {{hasChanged ? 'active' : ''}}" bindtap="saveChanges">
+      {{hasChanged ? '保存修改' : '已同步'}}
+    </view>
+  </view>
+
+  <!-- 主体内容 -->
+  <scroll-view scroll-y class="content" enhanced="{{true}}">
+    <!-- 家庭信息模块 -->
+    <view class="card family-info">
+      <view class="header">
+        <image src="/images/icons/home.svg" class="icon"/>
+        <text class="section-title">家庭标识</text>
+      </view>
+      
+      <!-- 门牌名称 -->
+      <view class="form-item">
+        <text class="label">门牌昵称</text>
+        <input 
+          class="input"
+          value="{{family.plate}}"
+          placeholder="给家庭起个温暖的名字"
+          bindinput="handlePlateChange"
+          maxlength="10"
+        />
+        <view class="counter">{{family.plate.length}}/10</view>
+      </view>
+
+      <!-- 智能地址组件 -->
+      <view class="form-item">
+        <text class="label">家庭住址</text>
+        <amap-address-picker
+          location="{{location}}"
+          bindchange="handleAddressChange"
+          theme-color="#4a90e2"
+        />
+      </view>
+    </view>
+
+    <!-- 家庭成员模块 -->
+    <view class="card member-list">
+      <view class="header">
+        <image src="/images/icons/group.svg" class="icon"/>
+        <text class="section-title">家庭成员</text>
+        <text class="tips">(拖拽排序)</text>
+      </view>
+
+      <movable-area class="sort-area">
+        <block wx:for="{{familyMembers}}" wx:key="id">
+          <movable-view 
+            class="member-card"
+            direction="vertical"
+            damping="40"
+            friction="20"
+            data-index="{{index}}"
+          >
+            <view class="drag-handle">
+              <image src="/images/icons/drag.svg" class="icon"/>
+            </view>
+            <image 
+              src="{{item.avatar || '/images/default-avatar.png'}}"
+              class="avatar"
+              bindtap="uploadAvatar"
+              data-index="{{index}}"
+            />
+            <input 
+              class="name-input"
+              value="{{item.name}}"
+              placeholder="成员姓名"
+              data-index="{{index}}"
+              bindinput="handleNameChange"
+            />
+            <picker 
+              class="relation-picker"
+              mode="selector"
+              range="{{relations}}"
+              value="{{item.relationIndex}}"
+              data-index="{{index}}"
+              bindchange="handleRelationChange"
+            >
+              <view class="relation">
+                {{relations[item.relationIndex]}}
+                <image src="/images/icons/arrow-down.svg" class="icon"/>
+              </view>
+            </picker>
+            <view 
+              class="delete-btn"
+              bindtap="deleteMember"
+              data-index="{{index}}"
+            >
+              <image src="/images/icons/trash.svg" class="icon"/>
+            </view>
+          </movable-view>
+        </block>
+      </movable-area>
+
+      <view class="add-member" bindtap="addMember">
+        <image src="/images/icons/plus-circle.svg" class="icon"/>
+        <text>添加新成员</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 保存提示 -->
+  <view wx:if="{{showSaveTip}}" class="save-tip animate__fadeInUp">
+    <image src="/images/icons/check-circle.svg" class="icon"/>
+    <text>修改已自动保存</text>
+  </view>
+</view>
