@@ -1,11 +1,98 @@
 /* pages/doorplate/edit.wxss */
+:root {
+    --primary-color: #4a90e2;        /* 主色调 */
+    --danger-color: #ff4d4f;         /* 警示色 */
+    --text-primary: #333;            /* 主要文字 */
+    --text-secondary: #666;          /* 次要文字 */
+    --border-color: #e8e8e8;         /* 边框色 */
+    --radius-sm: 8rpx;               /* 小圆角 */
+    --radius-lg: 16rpx;              /* 大圆角 */
+    --shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); /* 统一投影 */
+  }
 .edit-container {
-    --primary: #4a90e2;
-    --background: #f8f9fc;
-    --card-bg: rgba(255,255,255,0.9);
-    --text-primary: #1a1a1a;
-    --text-secondary: #666;
-    --border: rgba(0,0,0,0.1);
+    padding-top: 110rpx; /* 导航栏高度补偿 */
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .content {
+    height: calc(100vh - 88rpx); /* 精确计算滚动区域高度 */
+    padding-bottom: 120rpx; /* 防止底部内容被遮挡 */
+  }
+
+  .save-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 48rpx;
+    padding: 16rpx 48rpx;
+    font-size: 28rpx;
+    box-shadow: var(--shadow);
+  }
+
+  .title {
+    font-size: 36rpx;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .form-item {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 32rpx;
+    margin-top: 30rpx;
+    margin-bottom: 24rpx;
+    box-shadow: var(--shadow);
+  }
+
+  .label {
+    font-size: 30rpx;
+    color: var(--text-primary);
+    margin-bottom: 24rpx;
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+  }
+  
+  .label::before {
+    content: '';
+    width: 8rpx;
+    height: 32rpx;
+    background: var(--primary-color);
+    border-radius: 4rpx;
+  }
+  
+  /* 输入框与邻居页搜索框统一 */
+  .input {
+    border: 2rpx solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 24rpx;
+    font-size: 28rpx;
+    color: var(--text-primary);
+  }
+  
+  .input::placeholder {
+    color: #999;
+  }
+
+  .avatar {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 50%;
+    border: 2rpx solid var(--border-color);
+  }
+
+  .name-input {
+    border: 2rpx solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 16rpx;
+    font-size: 28rpx;
+  }
+
+  .delete-btn {
+    background: var(--danger-color);
+    border-radius: var(--radius-sm);
+    padding: 12rpx 24rpx;
+    font-size: 24rpx;
   }
   
   /* 毛玻璃导航栏 */
@@ -57,4 +144,96 @@
     display: flex;
     align-items: center;
     box-shadow: 0 8rpx 24rpx rgba(74,144,226,0.3);
+  }
+
+  .icon {
+    width: 1em;  /* 使用 em 单位适配字体大小 */
+    height: 1em;
+    vertical-align: middle;
+  }
+
+  /* 特定图标尺寸定义 */
+.back-btn .icon,
+.save-btn .icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.drag-handle .icon {
+  width: 24rpx;
+  height: 24rpx;
+  opacity: 0.6;
+}
+
+/* 输入框聚焦状态 */
+.input:focus,
+.name-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2rpx rgba(74,144,226,0.2);
+}
+
+/* 禁用状态 */
+.input:disabled {
+  background-color: #f5f5f5;
+  color: #ccc;
+}
+
+/* 拖拽过程中的视觉提示 */
+.movable-view.moving {
+    box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
+    opacity: 0.8;
+  }
+  
+  /* 拖拽手柄悬停效果 */
+  .drag-handle:active {
+    transform: scale(1.1);
+  }
+
+  /* 保存按钮交互状态 */
+.save-btn.active {
+    background: linear-gradient(135deg, #4a90e2, #346ab8);
+  }
+  
+  .save-btn:active {
+    transform: scale(0.96);
+  }
+  
+  /* 删除按钮悬停态 */
+  .delete-btn:active {
+    background: #ff7875;
+  }
+
+  .counter {
+    font-size: 24rpx;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-top: 8rpx;
+  }
+
+  /* 保存提示动画 */
+.save-tip {
+    animation: fadeInUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 20rpx);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  /* 小屏幕适配 */
+@media (max-width: 480px) {
+    .form-item {
+      padding: 24rpx;
+    }
+    
+    .member-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
