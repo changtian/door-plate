@@ -1,0 +1,270 @@
+<!-- pages/doorplate/edit.wxml -->
+<view class="edit-container">
+  <!-- 沉浸式导航栏 -->
+  <view class="nav-bar">
+    <view class="back-btn" bindtap="navigateBack">
+      <image src="/images/icons/arrow-left.svg" class="icon"/>
+    </view>
+    <text class="title">家庭信息管理</text>
+    <view class="save-btn {{hasChanged ? 'active' : ''}}" bindtap="saveChanges">
+      {{hasChanged ? '保存修改' : '已同步'}}
+    </view>
+  </view>
+
+  <!-- 主体内容 -->
+  <scroll-view scroll-y class="content" enhanced="{{true}}">
+    <!-- 家庭信息模块 -->
+    <view class="card family-info">
+      <view class="header">
+        <image src="/images/icons/home.svg" class="icon"/>
+        <text class="section-title">家庭标识</text>
+      </view>
+      
+      <!-- 门牌名称 -->
+      <view class="form-item">
+        <text class="label">门牌昵称</text>
+        <input 
+          class="input"
+          value="{{family.plate}}"
+          placeholder="给家庭起个温暖的名字"
+          bindinput="handlePlateChange"
+          maxlength="10"
+        />
+        <view class="counter">{{family.plate.length}}/10</view>
+      </view>
+
+      <!-- 智能地址组件 -->
+      <view class="form-item">
+        <text class="label">家庭住址</text>
+        <amap-address-picker
+          location="{{location}}"
+          bindchange="handleAddressChange"
+          theme-color="#4a90e2"
+        />
+      </view>
+    </view>
+
+    <!-- 家庭成员模块 -->
+    <view class="card member-list">
+      <view class="header">
+        <image src="/images/icons/group.svg" class="icon"/>
+        <text class="section-title">家庭成员</text>
+        <text class="tips">(拖拽排序)</text>
+      </view>
+
+      <movable-area class="sort-area">
+        <block wx:for="{{familyMembers}}" wx:key="id">
+          <movable-view 
+            class="member-card"
+            direction="vertical"
+            damping="40"
+            friction="20"
+            data-index="{{index}}"
+          >
+            <view class="drag-handle">
+              <image src="/images/icons/drag.svg" class="icon"/>
+            </view>
+            <image 
+              src="{{item.avatar || '/images/default-avatar.png'}}"
+              class="avatar"
+              bindtap="uploadAvatar"
+              data-index="{{index}}"
+            />
+            <input 
+              class="name-input"
+              value="{{item.name}}"
+              placeholder="成员姓名"
+              data-index="{{index}}"
+              bindinput="handleNameChange"
+            />
+            <picker 
+              class="relation-picker"
+              mode="selector"
+              range="{{relations}}"
+              value="{{item.relationIndex}}"
+              data-index="{{index}}"
+              bindchange="handleRelationChange"
+            >
+              <view class="relation">
+                {{relations[item.relationIndex]}}
+                <image src="/images/icons/arrow-down.svg" class="icon"/>
+              </view>
+            </picker>
+            <view 
+              class="delete-btn"
+              bindtap="deleteMember"
+              data-index="{{index}}"
+            >
+              <image src="/images/icons/trash.svg" class="icon"/>
+            </view>
+          </movable-view>
+        </block>
+      </movable-area>
+
+      <view class="add-member" bindtap="addMember">
+        <image src="/images/icons/plus-circle.svg" class="icon"/>
+        <text>添加新成员</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 保存提示 -->
+  <view wx:if="{{showSaveTip}}" class="save-tip animate__fadeInUp">
+    <image src="/images/icons/check-circle.svg" class="icon"/>
+    <text>修改已自动保存</text>
+  </view>
+</view>
+
+
+
+/* pages/doorplate/edit.wxss */
+:root {
+    --primary-color: #4a90e2;        /* 主色调 */
+    --danger-color: #ff4d4f;         /* 警示色 */
+    --text-primary: #333;            /* 主要文字 */
+    --text-secondary: #666;          /* 次要文字 */
+    --border-color: #e8e8e8;         /* 边框色 */
+    --radius-sm: 8rpx;               /* 小圆角 */
+    --radius-lg: 16rpx;              /* 大圆角 */
+    --shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); /* 统一投影 */
+  }
+.edit-container {
+    --primary: #4a90e2;
+    --background: #f8f9fc;
+    --card-bg: rgba(255,255,255,0.9);
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  .save-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 48rpx;
+    padding: 16rpx 48rpx;
+    font-size: 28rpx;
+    box-shadow: var(--shadow);
+  }
+
+  .title {
+    font-size: 36rpx;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .form-item {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 32rpx;
+    margin-top: 30rpx;
+    margin-bottom: 24rpx;
+    box-shadow: var(--shadow);
+  }
+
+  .label {
+    font-size: 30rpx;
+    color: var(--text-primary);
+    margin-bottom: 24rpx;
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+  }
+  
+  .label::before {
+    content: '';
+    width: 8rpx;
+    height: 32rpx;
+    background: var(--primary-color);
+    border-radius: 4rpx;
+  }
+  
+  /* 输入框与邻居页搜索框统一 */
+  .input {
+    border: 2rpx solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 24rpx;
+    font-size: 28rpx;
+    color: var(--text-primary);
+  }
+  
+  .input::placeholder {
+    color: #999;
+  }
+
+  .avatar {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 50%;
+    border: 2rpx solid var(--border-color);
+  }
+
+  .name-input {
+    border: 2rpx solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 16rpx;
+    font-size: 28rpx;
+  }
+
+  .delete-btn {
+    background: var(--danger-color);
+    border-radius: var(--radius-sm);
+    padding: 12rpx 24rpx;
+    font-size: 24rpx;
+  }
+  
+  /* 毛玻璃导航栏 */
+  .nav-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20rpx 32rpx;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(20rpx);
+    display: flex;
+    align-items: center;
+    z-index: 100;
+  }
+  
+  /* 智能地址组件 */
+  .amap-address-picker {
+    border-radius: 16rpx;
+    overflow: hidden;
+    box-shadow: 0 4rpx 12rpx rgba(74,144,226,0.1);
+  }
+  
+  /* 可拖拽成员卡片 */
+  .member-card {
+    background: var(--card-bg);
+    border-radius: 24rpx;
+    padding: 24rpx;
+    margin-bottom: 24rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  
+  .member-card:active {
+    transform: scale(0.98);
+  }
+  
+  /* 动态保存提示 */
+  .save-tip {
+    position: fixed;
+    bottom: 48rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    padding: 16rpx 32rpx;
+    border-radius: 48rpx;
+    color: white;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 8rpx 24rpx rgba(74,144,226,0.3);
+  }
+
+  .icon {
+    width: 1em;  /* 使用 em 单位适配字体大小 */
+    height: 1em;
+    vertical-align: middle;
+  }
