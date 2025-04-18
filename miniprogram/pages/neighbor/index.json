@@ -1,7 +1,5 @@
 {
   "navigationBarTitleText": "邻居列表",
   "usingComponents": {
-    "cloud-tip-modal": "/components/cloudTipModal/index",
-    "mp-code-modal": "/components/mpCodeModal/index"
   }
 }
